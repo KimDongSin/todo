@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import TodoCard from "./components/todos/TodoCard";
+import TodoForm from "./components/todos/TodoForm";
 import "./reset.css";
 
 function App() {
@@ -11,8 +12,17 @@ function App() {
   });
 
   // 제목과 내용 입력 상태관리.
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [todoVal, setTodoVal] = useState({
+    title: "",
+    content: "",
+  });
+
+  /*
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+
+    관리하기 편하게 객체로 리팩토링 하였습니다.
+  */
 
   /*
     // 제목 입력값과 내용 입력값 변경하는 핸들러
@@ -28,10 +38,13 @@ function App() {
   */
 
   // 제목 입력값과 내용 입력값 변경하는 핸들러
-  const inputChangeHandler = (setterFn) => {
-    return ({ target }) => {
-      setterFn(target.value);
-    };
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setTodoVal((prev) => ({
+      ...prev,
+      [name]: value,
+      // 동적으로 속성을 처리하였습니다.
+    }));
   };
 
   // 새로운 Todo을 추가하는 기능
@@ -74,15 +87,14 @@ function App() {
   const todoFormSubmitHandler = (e) => {
     e.preventDefault();
     const newTodo = {
-      title: title,
-      content: content,
+      title: todoVal.title,
+      content: todoVal.content,
     };
 
     // 제목과 내용이 빈 값이 아닌 경우만 추가
-    if (title.trim().length > 0 && content.trim().length > 0) {
+    if (todoVal.title.trim().length > 0 && todoVal.content.trim().length > 0) {
       addTodo(newTodo);
-      setTitle("");
-      setContent("");
+      setTodoVal({ title: "", content: "" });
     } else {
       alert("빈 칸을 모두 입력해주세요.");
     }
@@ -90,33 +102,11 @@ function App() {
 
   return (
     <div className="todo__wrapper">
-      <form onSubmit={todoFormSubmitHandler} className="todo__top__wrapper">
-        <div className="todo__write__wrapper">
-          <div className="todo__write__info">
-            <span>제목</span>
-            <input
-              value={title}
-              onChange={inputChangeHandler(setTitle)}
-              placeholder="제목을 입력해주세요."
-              type="text"
-            />
-          </div>
-
-          <div className="todo__write__info">
-            <span>내용</span>
-            <input
-              value={content}
-              onChange={inputChangeHandler(setContent)}
-              placeholder="내용을 입력해주세요."
-              type="text"
-            />
-          </div>
-        </div>
-
-        <button className="write__btn--add" type="submit">
-          추가하기
-        </button>
-      </form>
+      <TodoForm
+        todoFormSubmitHandler={todoFormSubmitHandler}
+        inputChangeHandler={inputChangeHandler}
+        todoVal={todoVal}
+      />
 
       <div className="main">
         <div className="todo__list__wrapper">
