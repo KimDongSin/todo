@@ -14,13 +14,24 @@ function App() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  // 제목 입력값과 내용 입력값 변경하는 핸들러
-  const inputTitleChangeHandler = ({ target }) => {
-    setTitle(target.value);
-  };
+  /*
+    // 제목 입력값과 내용 입력값 변경하는 핸들러
+    const inputTitleChangeHandler = ({ target }) => {
+      setTitle(target.value);
+    };
 
-  const inputContentChangeHandler = ({ target }) => {
-    setContent(target.value);
+    const inputContentChangeHandler = ({ target }) => {
+      setContent(target.value);
+    };
+
+    이 부분이 중복되고 있어서 확장성있게 리팩토링을 시도해봤습니다.
+  */
+
+  // 제목 입력값과 내용 입력값 변경하는 핸들러
+  const inputChangeHandler = (setterFn) => {
+    return ({ target }) => {
+      setterFn(target.value);
+    };
   };
 
   // 새로운 Todo을 추가하는 기능
@@ -43,12 +54,11 @@ function App() {
   // 완료된 Todo를 취소하는 기능
   const cancelMarkAsDone = (todoIndex) => {
     const updatedTodo = todos.done[todoIndex];
-    // done프로퍼티에서 prev.done에 필터함수로 idx 검증
+    // 완료된 Todo를 done 배열에서 필터링해서 제거하고 working배열에 추가함.
     setTodos((prev) => ({
       done: prev.done.filter((_, idx) => idx !== todoIndex),
       working: [...prev.working, updatedTodo],
     }));
-    console.log(todos);
   };
 
   // Todo를 삭제하는 기능
@@ -86,7 +96,7 @@ function App() {
             <span>제목</span>
             <input
               value={title}
-              onChange={inputTitleChangeHandler}
+              onChange={inputChangeHandler(setTitle)}
               placeholder="제목을 입력해주세요."
               type="text"
             />
@@ -96,7 +106,7 @@ function App() {
             <span>내용</span>
             <input
               value={content}
-              onChange={inputContentChangeHandler}
+              onChange={inputChangeHandler(setContent)}
               placeholder="내용을 입력해주세요."
               type="text"
             />
