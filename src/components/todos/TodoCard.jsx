@@ -18,23 +18,13 @@ function TodoCard({ todo, markAsDone, deleteTodo, isDone }) {
                 삭제하기
               </button>
 
-              {isDone ? ( // isDone이 true면 취소, false면 완료텍스트로 toggle
-                <button
-                  type="button"
-                  className="info__btns--done"
-                  onClick={markAsDone}
-                >
-                  취소
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="info__btns--done"
-                  onClick={markAsDone}
-                >
-                  완료
-                </button>
-              )}
+              <button
+                type="button"
+                className="info__btns--done"
+                onClick={markAsDone}
+              >
+                {isDone ? "취소" : "완료"}
+              </button>
             </div>
           </div>
         </div>

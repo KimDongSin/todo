@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import TodoCard from "./components/todos/TodoCard";
 import TodoForm from "./components/todos/TodoForm";
+import TodoList from "./components/todos/TodoList";
 import "./reset.css";
 
 function App() {
@@ -79,7 +79,7 @@ function App() {
     setTodos((prev) => ({
       ...prev,
       [type]: prev[type].filter((_, idx) => idx !== todoIndex),
-      // type자리는 working, done을 의미한다.
+      // type 속성은 동적으로 처리. working, done을 의미합니다.
     }));
   };
 
@@ -111,30 +111,18 @@ function App() {
       <div className="main">
         <div className="todo__list__wrapper">
           <div className="list__card__wrapper">
-            <h1 className="list__title">Working...</h1>
-            <div className="list__item__wrapper">
-              {todos.working.map((todo, idx) => (
-                <TodoCard
-                  todo={todo}
-                  key={idx}
-                  markAsDone={() => markAsDone(idx)}
-                  deleteTodo={() => deleteTodo(idx, "working")}
-                  isDone={false} // 완료되지 않은 Todo에는 isDone props를 false로 전달
-                />
-              ))}
-            </div>
-            <h1 className="list__title">Done...</h1>
-            <div className="list__item__wrapper">
-              {todos.done.map((todo, idx) => (
-                <TodoCard
-                  todo={todo}
-                  key={idx}
-                  markAsDone={() => cancelMarkAsDone(idx)}
-                  deleteTodo={() => deleteTodo(idx, "done")}
-                  isDone={true} // 완료되지 않은 Todo에는 isDone props를 false로 전달
-                />
-              ))}
-            </div>
+            <TodoList
+              todos={todos.working}
+              type="working"
+              markAsDone={markAsDone}
+              deleteTodo={deleteTodo}
+            />
+            <TodoList
+              todos={todos.done}
+              type="done"
+              markAsDone={cancelMarkAsDone}
+              deleteTodo={deleteTodo}
+            />
           </div>
         </div>
       </div>
