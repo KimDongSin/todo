@@ -1,8 +1,28 @@
-# React + Vite
+## React-TodoList
+---
+### 기능 명세서
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- [ ] **(1) Vite를 사용한 프로젝트 설정**
 
-Currently, two official plugins are available:
+- [ ] **(2) 더미 UI 그리기**
+    - 적절한 CSS 파일에서 레이아웃 너비(1200px x 800px)를 설정합니다.
+    - 원하는 디자인에 맞게 HTML(JSX)과 CSS만을 사용하여 UI를 작성합니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [ ] **(3) Todo 추가 구현하기**
+    - useState를 사용하여 todo 상태를 정의합니다.
+    - 추가 버튼을 클릭하면 작업 부분에 todo 카드가 추가됩니다.
+
+- [ ] **(4) Todo 삭제 구현하기**
+    - 특정 todo 카드의 삭제 버튼을 클릭하면 해당 카드가 삭제됩니다.
+
+- [ ] **(5) Todo 완료 상태 변경 구현하기**
+    - todo 카드의 완료 버튼을 클릭하면 해당 카드가 작업 부분에서 완료 부분으로 이동하며 텍스트가 "완료"에서 "취소"로 변경됩니다.
+    - "취소" 버튼을 클릭하면 완료 부분에서 작업 부분으로 todo 카드가 이동하고 텍스트가 다시 "완료"로 변경됩니다.
+
+- [ ] **(6) 코드 보완**
+    - 투두 리스트가 예외 없이 잘 작동하는지 직접 테스트하고 확인합니다.
+    - 컴포넌트 분리 등 리팩터링이 필요한 부분이 있는지 살펴봅니다.
+
+### 제한사항
+---
+오직 jsx, css만을 사용합니다.
